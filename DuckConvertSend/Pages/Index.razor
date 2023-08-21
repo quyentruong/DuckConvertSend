@@ -1,0 +1,55 @@
+﻿@page "/"
+@using CurrieTechnologies.Razor.Clipboard
+@inject ClipboardService clipboard
+@inject ISnackbar Snackbar
+
+<PageTitle>Index</PageTitle>
+
+<MudTextField Counter="0" Immediate="true" @bind-Value="DuckEmail" Label="Your Duck Email" HelperText="Ex: af2rae5@duck.com" Variant="Variant.Text" Clearable />
+ <MudTextField Counter="0" Immediate="true" @bind-Value="EmailSendTo" Label="Email To Send" HelperText="Ex: example@example.com" Variant="Variant.Text" Clearable />
+ <MudTextField Counter="0" Immediate="true" ReadOnly @bind-Value="EmailCompose" Label="Send with this email" Variant="Variant.Filled" AdornmentColor="Color.Primary" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(e => OnAdornmentFn(e))" />
+
+ @code {
+    private string _duckEmail = "";
+    protected string DuckEmail
+    {
+        get => _duckEmail;
+        set
+        {
+            _duckEmail = value;
+            if (value.Length > 0)
+            {
+                ListEmailCompose[0] = "_" + value;
+            }
+            else
+            {
+                ListEmailCompose[0] = "";
+            }
+            EmailCompose = ListEmailCompose[1] + ListEmailCompose[0];
+        }
+    }
+    private string[] ListEmailCompose = new string[2];
+
+    private string _emailSendTo = "";
+    protected string EmailSendTo
+    {
+        get => _emailSendTo;
+        set
+        {
+            _emailSendTo = value;
+            ListEmailCompose[1] = value.Replace("@", "_at_");
+            EmailCompose = ListEmailCompose[1] + ListEmailCompose[0];
+        }
+    }
+    private string EmailCompose = "";
+
+    private async void OnAdornmentFn(EventArgs e)
+    {
+        if (EmailCompose.Length > 0)
+        {
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            await clipboard.WriteTextAsync(EmailCompose);
+            Snackbar.Add($"Copied {EmailCompose}", Severity.Success);
+        }
+    }
+}
