@@ -49,7 +49,7 @@
       "url": "_framework\/icudt.dat.br"
     },
     {
-      "hash": "sha256-h1O9L7LnaQn6FdlBqDhq4ZwZXpSXaYCxd0+6vjmsUls=",
+      "hash": "sha256-ZleiS8qkTa9iNmb782R7e9n8xeBuPkRavWM2P3YrOuY=",
       "url": "_framework\/blazor.boot.json.br"
     },
     {
@@ -57,7 +57,7 @@
       "url": "_framework\/CurrieTechnologies.Razor.Clipboard.dll.br"
     },
     {
-      "hash": "sha256-uTc4707sva1EXcqXPHET9cMXBQfKg5FVMZ3WDEqcGvo=",
+      "hash": "sha256-2u9cnICN1398zG177BO666UYoDc50Gw2aHLJ6im0Pw8=",
       "url": "_framework\/DuckConvertSend.dll.br"
     },
     {
@@ -129,7 +129,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.dll.br"
     },
     {
-      "hash": "sha256-ECiWjZiFGWH3Yq8xE6opF+u8WjXcxvTZcHjVppMi8z8=",
+      "hash": "sha256-Di7QtJF+N\/GP\/yti4z40v9J4N8QgTf224kpiATZw4pI=",
       "url": "_framework\/MudBlazor.dll.br"
     },
     {
@@ -269,5 +269,5 @@
       "url": "brotliloader.min.js"
     }
   ],
-  "version": "DUyP0sqh"
+  "version": "C3nVHhwe"
 };
