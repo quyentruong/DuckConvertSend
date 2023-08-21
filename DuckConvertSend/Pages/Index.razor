@@ -47,7 +47,6 @@
     {
         if (EmailCompose.Length > 0)
         {
-            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             await clipboard.WriteTextAsync(EmailCompose);
             Snackbar.Add($"Copied {EmailCompose}", Severity.Success);
         }
