@@ -1,12 +1,14 @@
 ﻿@page "/"
 @using CurrieTechnologies.Razor.Clipboard
+@using System.Text.RegularExpressions;
+@using System.ComponentModel.DataAnnotations;
 @inject ClipboardService clipboard
 @inject ISnackbar Snackbar
 
 <PageTitle>Index</PageTitle>
 
-<MudTextField Counter="0" Immediate="true" @bind-Value="DuckEmail" Label="Your Duck Email" HelperText="Ex: af2rae5@duck.com" Variant="Variant.Text" Clearable />
- <MudTextField Counter="0" Immediate="true" @bind-Value="EmailSendTo" Label="Email To Send" HelperText="Ex: example@example.com" Variant="Variant.Text" Clearable />
+<MudTextField Counter="0" Immediate="true" @bind-Value="DuckEmail" Label="Your Duck Email" HelperText="Ex: af2rae5@duck.com" Variant="Variant.Text" Clearable Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+ <MudTextField Counter="0" Immediate="true" @bind-Value="EmailSendTo" Label="Email To Send" HelperText="Ex: example@example.com" Variant="Variant.Text" Clearable Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
  <MudTextField Counter="0" Immediate="true" ReadOnly @bind-Value="EmailCompose" Label="Send with this email" Variant="Variant.Filled" AdornmentColor="Color.Primary" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(e => OnAdornmentFn(e))" />
 
  @code {
@@ -16,7 +18,8 @@
         get => _duckEmail;
         set
         {
-            _duckEmail = value;
+            _duckEmail = value.Replace(" ", "");
+
             if (value.Length > 0)
             {
                 ListEmailCompose[0] = "_" + value;
@@ -36,7 +39,7 @@
         get => _emailSendTo;
         set
         {
-            _emailSendTo = value;
+            _emailSendTo = value.Replace(" ", "");
             ListEmailCompose[1] = value.Replace("@", "_at_");
             EmailCompose = ListEmailCompose[1] + ListEmailCompose[0];
         }
