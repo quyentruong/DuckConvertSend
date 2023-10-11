@@ -2,14 +2,16 @@
 @using CurrieTechnologies.Razor.Clipboard
 @using System.Text.RegularExpressions;
 @using System.ComponentModel.DataAnnotations;
+@using System.Text;
+@using Extension;
 @inject ClipboardService clipboard
 @inject ISnackbar Snackbar
 
 <PageTitle>Index</PageTitle>
 
-<MudTextField Counter="0" Immediate="true" @bind-Value="DuckEmail" Label="Your Duck Email" HelperText="Ex: af2rae5@duck.com" Variant="Variant.Text" Clearable Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
- <MudTextField Counter="0" Immediate="true" @bind-Value="EmailSendTo" Label="Email To Send" HelperText="Ex: example@example.com" Variant="Variant.Text" Clearable Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
- <MudTextField Counter="0" Immediate="true" ReadOnly @bind-Value="EmailCompose" Label="Send with this email" Variant="Variant.Filled" AdornmentColor="Color.Primary" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(e => OnAdornmentFn(e))" />
+<MudTextField Counter="0" DebounceInterval="500" @bind-Value="DuckEmail" Label="Your Duck Email" HelperText="Ex: af2rae5@duck.com" Variant="Variant.Text" Clearable Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+ <MudTextField Counter="0" DebounceInterval="500" @bind-Value="EmailSendTo" Label="Email To Send" HelperText="Ex: example@example.com" Variant="Variant.Text" Clearable Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+ <MudTextField Counter="0" ReadOnly @bind-Value="EmailCompose" Label="Send with this email" Variant="Variant.Filled" AdornmentColor="Color.Primary" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(e => OnAdornmentFn(e))" />
 
  @code {
     private string _duckEmail = "";
@@ -19,10 +21,11 @@
         set
         {
             _duckEmail = value.Replace(" ", "");
+            _duckEmail = _duckEmail.RemoveConsecutiveAtSymbols();
 
-            if (value.Length > 0)
+            if (_duckEmail.Length > 0)
             {
-                ListEmailCompose[0] = "_" + value;
+                ListEmailCompose[0] = "_" + _duckEmail;
             }
             else
             {
@@ -40,7 +43,8 @@
         set
         {
             _emailSendTo = value.Replace(" ", "");
-            ListEmailCompose[1] = value.Replace("@", "_at_");
+            _emailSendTo = _emailSendTo.RemoveConsecutiveAtSymbols();
+            ListEmailCompose[1] = _emailSendTo.Replace("@", "_at_");
             EmailCompose = ListEmailCompose[1] + ListEmailCompose[0];
         }
     }
@@ -54,4 +58,5 @@
             Snackbar.Add($"Copied {EmailCompose}", Severity.Success);
         }
     }
+
 }
