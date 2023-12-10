@@ -9,7 +9,7 @@
 
 <PageTitle>Index</PageTitle>
 
-<MudTextField Counter="0" DebounceInterval="500" @bind-Value="DuckEmail" Label="Your Duck Email" HelperText="Ex: af2rae5@duck.com" Variant="Variant.Text" Clearable Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+<MudTextField Counter="0" DebounceInterval="500" @bind-Value="DuckEmail" Label="Your Duck Email" HelperText="Ex: af2rae5@duck.com" Variant="Variant.Text" Clearable Validation="@(new DuckEmailValidationAttribute() {ErrorMessage = "The duck email address is invalid"})" />
  <MudTextField Counter="0" DebounceInterval="500" @bind-Value="EmailSendTo" Label="Email To Send" HelperText="Ex: example@example.com" Variant="Variant.Text" Clearable Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
  <MudTextField Counter="0" ReadOnly @bind-Value="EmailCompose" Label="Send with this email" Variant="Variant.Filled" AdornmentColor="Color.Primary" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(e => OnAdornmentFn(e))" />
 
